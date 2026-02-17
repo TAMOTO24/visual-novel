@@ -1,0 +1,30 @@
+{
+  "dialogue": [
+    {
+      "id": 1,
+      "name": "Jack",
+      "message": "I have a question about the code in main.py. I see that",
+      "expression": ""
+    },
+    {
+      "id": 2,
+      "name": "Jack",
+      "message": "the code creates a window and shows a GameView, but I don't see where the GameView class is defined. Can you explain that?",
+      "expression": ""
+    },
+    {
+      "id": 3,
+      "name": "Bill",
+      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
+      "expression": "Curious",
+      "both": true
+    },
+    {
+      "id": 4,
+      "name": "Legoshi",
+      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
+      "expression": "Curious",
+      "image": false 
+    }
+  ]
+}
