@@ -1,6 +1,13 @@
 {
   "dialogue": [
     {
+      "id": 0,
+      "name": "Legoshi",
+      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
+      "expression": "Curious",
+      "image": false
+    },
+    {
       "id": 1,
       "name": "Jack",
       "message": "I have a question about the code in main.py. I see that",
@@ -24,7 +31,20 @@
       "name": "Legoshi",
       "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
       "expression": "Curious",
-      "image": false 
+      "image": false
+    },
+    {
+      "id": 5,
+      "name": "Legoshi",
+      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
+      "expression": "Curious",
+      "image": false
+    },
+    {
+      "id": 1,
+      "name": "Jack",
+      "message": "I have a question about the code in main.py. I see that",
+      "expression": ""
     }
   ]
 }

@@ -18,23 +18,25 @@ def characterScrypt(array, name):
     if name == "Legoshi":
         return array
 
-    if not array:
-        return [characterArray[name]]
-    else:
-        newCharacterArray = array
-        newCharacterArray.append(characterArray[name])
-        print(newCharacterArray, "Should be the ine")
-        return newCharacterArray
+    if name not in characterArray:
+        return array
+
+    return array + [characterArray[name]]
 
 
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.dialogue_c = 0 # dialogue counter
+        self.dialogue_c = 0  # dialogue counter
         self.dialogue_txt = readDialogue()
         self.main_character = characterArray["Legoshi"]
-        self.main_character.sprite.center_x = settings["window"]["width"] - self.main_character.Width // 2
-        self.main_character.sprite.center_y = settings["window"]["height"] - self.main_character.Height
+        self.main_character.sprite.center_x = (
+            settings["window"]["width"] - self.main_character.Width // 2
+        )
+        self.main_character.sprite.center_y = (
+            settings["window"]["height"] - self.main_character.Height
+        )
+        self.character_list = arcade.SpriteList()
 
         self.characters = characterScrypt([], self.dialogue_txt[0]["name"])
         self.text_obj = arcade.Text(
@@ -50,13 +52,12 @@ class GameView(arcade.View):
     def on_draw(self):
         self.clear()
 
-        character_list = arcade.SpriteList()
         for ch in self.characters:
-            if not ch.sprite in character_list:
-                character_list.append(ch.sprite)
+            self.character_list.append(ch.sprite)
 
-        character_list.draw()
+        self.character_list.draw()
         self.text_obj.draw()
+        self.character_list.clear()
 
         if self.dialogue_txt[self.dialogue_c]["name"] == "Legoshi":
             main_ch = arcade.SpriteList()
@@ -84,7 +85,9 @@ class GameView(arcade.View):
 
 
 def main():
-    window = arcade.Window(settings["window"]["width"], settings["window"]["height"], settings["title"])
+    window = arcade.Window(
+        settings["window"]["width"], settings["window"]["height"], settings["title"]
+    )
     window.set_update_rate(1 / settings["window"]["fps"])
 
     game = GameView()
