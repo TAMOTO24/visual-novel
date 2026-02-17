@@ -14,7 +14,10 @@ class CharacterSprite:
         self.emotions = emotions
         self.Width = spriteW
         self.Height = spriteH
-
+        
+    def change_emotion(self, emotion):
+        if emotion in self.emotions:
+            self.sprite.texture = self.emotions[emotion]
 
 # class sceneBackground():
 #     def __init__(self, ImgAdress:str, SpriteW, SpriteH, CharactersOnScreen:str):

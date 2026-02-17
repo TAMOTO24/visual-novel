@@ -4,7 +4,7 @@
       "id": 0,
       "name": "Legoshi",
       "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
-      "expression": "Curious",
+      "expression": "",
       "image": false
     },
     {
@@ -23,7 +23,14 @@
       "id": 3,
       "name": "Bill",
       "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
-      "expression": "Curious",
+      "expression": "",
+      "both": true
+    },
+    {
+      "id": 3,
+      "name": "Bill",
+      "message": "Also, I noticed tha",
+      "expression": "uniform",
       "both": true
     },
     {
@@ -41,9 +48,9 @@
       "image": false
     },
     {
-      "id": 1,
-      "name": "Jack",
-      "message": "I have a question about the code in main.py. I see that",
+      "id": 3,
+      "name": "Bill",
+      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
       "expression": ""
     }
   ]

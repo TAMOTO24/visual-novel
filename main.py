@@ -14,10 +14,11 @@ def readDialogue():
         return []
 
 
-def characterScrypt(array, name):
+def characterScrypt(array, name, exp=""):
     if name == "Legoshi":
         return array
 
+    characterArray[name].change_emotion(exp or "usual")
     if name not in characterArray:
         return array
 
@@ -64,7 +65,8 @@ class GameView(arcade.View):
         self.clear()
 
         for ch in self.characters:
-            self.character_list.append(ch.sprite)
+            if not ch.sprite in self.character_list:
+                self.character_list.append(ch.sprite)
 
         self.character_list.draw()
         self.text_obj.draw()
@@ -81,11 +83,13 @@ class GameView(arcade.View):
             self.text_obj.text = self.dialogue_txt[self.dialogue_c]["message"]
 
             chName = self.dialogue_txt[self.dialogue_c]["name"]
+            exp = self.dialogue_txt[self.dialogue_c]["expression"]
             if self.dialogue_txt[self.dialogue_c].get("both") or chName == "Legoshi":
                 # if we get BOTH command then we need to add another character inside
-                self.characters = characterScrypt(self.characters, chName)
+                self.characters = characterScrypt(self.characters, chName, exp)
             else:
                 self.characters = characterScrypt([], chName)
+
             position_characters(self.characters)
 
     # def on_update(self, delta_time):
