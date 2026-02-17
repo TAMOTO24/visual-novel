@@ -1,12 +1,13 @@
 import arcade
+from setup import settings
 
 
 class CharacterSprite:
     def __init__(self, texture: str, spriteW=460, spriteH=700, name="", emotions={}):
         self.sprite = arcade.Sprite(scale=0.9)
         self.sprite.texture = texture
-        self.sprite.center_x = 700
-        self.sprite.center_y = 415
+        self.sprite.center_x = settings["window"]["width"] // 2
+        self.sprite.center_y = spriteH // 2 + 100
 
         self.onScreen = False
         self.name = name

@@ -24,6 +24,17 @@ def characterScrypt(array, name):
     return array + [characterArray[name]]
 
 
+def position_characters(characters):
+    center = settings["window"]["width"] // 2
+
+    if len(characters) == 1:
+        characters[0].sprite.center_x = center
+
+    elif len(characters) == 2:
+        characters[0].sprite.center_x = center - 300
+        characters[1].sprite.center_x = center + 300
+
+
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
@@ -32,10 +43,10 @@ class GameView(arcade.View):
         self.main_character = characterArray["Legoshi"]
         self.main_character.sprite.center_x = (
             settings["window"]["width"] - self.main_character.Width // 2
-        )
+        )  # position the main character on the right side of the screen
         self.main_character.sprite.center_y = (
             settings["window"]["height"] - self.main_character.Height
-        )
+        )  # position the main character at the bottom of the screen
         self.character_list = arcade.SpriteList()
 
         self.characters = characterScrypt([], self.dialogue_txt[0]["name"])
@@ -69,15 +80,13 @@ class GameView(arcade.View):
             self.dialogue_c += 1
             self.text_obj.text = self.dialogue_txt[self.dialogue_c]["message"]
 
-            companionName = self.dialogue_txt[self.dialogue_c]["name"]
-            if (
-                self.dialogue_txt[self.dialogue_c].get("both")
-                or companionName == "Legoshi"
-            ):
+            chName = self.dialogue_txt[self.dialogue_c]["name"]
+            if self.dialogue_txt[self.dialogue_c].get("both") or chName == "Legoshi":
                 # if we get BOTH command then we need to add another character inside
-                self.characters = characterScrypt(self.characters, companionName)
+                self.characters = characterScrypt(self.characters, chName)
             else:
-                self.characters = characterScrypt([], companionName)
+                self.characters = characterScrypt([], chName)
+            position_characters(self.characters)
 
     # def on_update(self, delta_time):
     #     if not self.dialogue_txt[self.dialogue_c].get("both"):
