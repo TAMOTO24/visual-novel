@@ -2,13 +2,14 @@ import arcade
 import json
 from characters import characterArray
 from setup import settings
+from texture import load_background_texture, load_dialogue_texture
 
 
 def readDialogue():
     try:
         with open("dialogue.json", "r") as f:
             data = json.load(f)
-            return data["dialogue"]
+            return data
     except FileNotFoundError:
         print(f"Error reading dialogue file: File not found")
         return []
@@ -40,7 +41,14 @@ class GameView(arcade.View):
     def __init__(self):
         super().__init__()
         self.dialogue_c = 0  # dialogue counter
-        self.dialogue_txt = readDialogue()
+        self.dialogueContent = readDialogue()
+
+        self.dialogue_txt = self.dialogueContent["dialogue"]
+        self.backgroundArray = load_background_texture()
+        self.bgName = self.dialogueContent["background"]
+
+        self.DEFAULTDIALOGUEWIDTH = 130
+
         self.main_character = characterArray["Legoshi"]
         self.main_character.sprite.center_x = (
             settings["window"]["width"] - self.main_character.Width // 2
@@ -56,31 +64,54 @@ class GameView(arcade.View):
             100,
             200,
             arcade.color.WHITE,
-            20,
+            30,
             multiline=True,
-            width=300,
+            width=settings["window"]["width"]
+            - self.main_character.Width
+            - self.DEFAULTDIALOGUEWIDTH,
         )
+        # background setting
+        self.backgroundObj = arcade.Sprite()
+        self.backgroundObj.texture = self.backgroundArray[self.bgName]
+        self.backgroundObj.center_x = settings["window"]["width"] // 2
+        self.backgroundObj.center_y = settings["window"]["height"] // 2
+        self.backgroundObj.height = settings["window"]["height"]
+        self.backgroundObj.width = settings["window"]["width"]
+        self.backgroundSpriteList = arcade.SpriteList()
+        self.backgroundSpriteList.append(self.backgroundObj)
+
+        # Dialogue box setting
+        self.dialogueBox = arcade.Sprite()
+        self.dialogueBox.texture = load_dialogue_texture()["dialogue"]
+        self.dialogueBox.center_x = settings["window"]["width"] // 2
+        self.dialogueBox.center_y = 160
+        self.dialogueBox.width = settings["window"]["width"]
+        self.dialogueBox.height = 300
+        self.dialogueBoxList = arcade.SpriteList()
+        self.dialogueBoxList.append(self.dialogueBox)
 
     def on_draw(self):
         self.clear()
-
-        for ch in self.characters:
-            if not ch.sprite in self.character_list:
-                self.character_list.append(ch.sprite)
+        self.backgroundSpriteList.draw()
 
         self.character_list.draw()
-        self.text_obj.draw()
         self.character_list.clear()
+        self.dialogueBoxList.draw()
 
         if self.dialogue_txt[self.dialogue_c]["name"] == "Legoshi":
             main_ch = arcade.SpriteList()
             main_ch.append(self.main_character.sprite)
+            self.text_obj.width = (
+                settings["window"]["width"] - 330
+            )  # 330 is main characters width
             main_ch.draw()
+        self.text_obj.draw()
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.SPACE:
             self.dialogue_c += 1
-            self.text_obj.text = self.dialogue_txt[self.dialogue_c]["message"]
+            msg = self.dialogue_txt[self.dialogue_c]["message"]
+            self.text_obj.text = msg
 
             chName = self.dialogue_txt[self.dialogue_c]["name"]
             exp = self.dialogue_txt[self.dialogue_c]["expression"]
@@ -92,9 +123,12 @@ class GameView(arcade.View):
 
             position_characters(self.characters)
 
-    # def on_update(self, delta_time):
-    #     if not self.dialogue_txt[self.dialogue_c].get("both"):
-    #         self.characters = []
+    def on_update(self, delta_time):
+        # this cycle need to prepare sprites to draw on the screen
+        for ch in self.characters:
+            if not ch.sprite in self.character_list:
+                self.character_list.append(ch.sprite)
+        self.text_obj.width = settings["window"]["width"] - 130
 
 
 def main():

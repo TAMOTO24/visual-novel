@@ -53,5 +53,6 @@
       "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
       "expression": ""
     }
-  ]
+  ],
+  "background" : "Street1"
 }

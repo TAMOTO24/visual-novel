@@ -18,10 +18,3 @@ class CharacterSprite:
     def change_emotion(self, emotion):
         if emotion in self.emotions:
             self.sprite.texture = self.emotions[emotion]
-
-# class sceneBackground():
-#     def __init__(self, ImgAdress:str, SpriteW, SpriteH, CharactersOnScreen:str):
-#         self.objBackground = pygame.image.load(ImgAdress)
-#         self.objBackground = pygame.transform.scale(self.objBackground,(SpriteW, SpriteH))
-#         self.TwoCharacters = False
-#         self.CharactersOnScreen = CharactersOnScreen
