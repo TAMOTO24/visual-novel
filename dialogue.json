@@ -1,58 +1,38 @@
 {
-  "dialogue": [
-    {
-      "id": 0,
-      "name": "Legoshi",
-      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
-      "expression": "",
-      "image": false
-    },
-    {
-      "id": 1,
-      "name": "Jack",
-      "message": "I have a question about the code in main.py. I see that",
-      "expression": ""
-    },
-    {
-      "id": 2,
-      "name": "Jack",
-      "message": "the code creates a window and shows a GameView, but I don't see where the GameView class is defined. Can you explain that?",
-      "expression": ""
-    },
-    {
-      "id": 3,
+  "_id": "street_intro",
+  "background": "Street1",
+  "start": "node_0",
+  "next_chapter_volume" : "street_evening",
+  "next_chapter": "chapter_1_street_evening",
+  "nodes": {
+    "node_0": {
       "name": "Bill",
-      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
-      "expression": "",
+      "message": "Also, I noticed that there are some lines...",
+      "expression": "normal",
+      "next": "node_1"
+    },
+    "node_1": {
+      "name": "Jack",
+      "message": "I have a question about the code in main.py.",
+      "expression": "thinking",
+      "next": "node_2",
       "both": true
     },
-    {
-      "id": 3,
+    "node_2" : {
+      "background_change": "Street2",
       "name": "Bill",
-      "message": "Also, I noticed tha",
+      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
       "expression": "uniform",
+      "next": "node_3",
       "both": true
     },
-    {
-      "id": 4,
-      "name": "Legoshi",
-      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
-      "expression": "Curious",
-      "image": false
-    },
-    {
-      "id": 5,
-      "name": "Legoshi",
-      "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
-      "expression": "Curious",
-      "image": false
-    },
-    {
-      "id": 3,
+    "node_3": {
+      "background_change": "Street2",
       "name": "Bill",
       "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
-      "expression": ""
+      "expression": "usual",
+      "next": "node_3",
+      "both": true
     }
-  ],
-  "background" : "Street1"
+  }
 }

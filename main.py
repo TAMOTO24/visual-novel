@@ -15,8 +15,8 @@ def readDialogue():
         return []
 
 
-def characterScrypt(array, name, exp=""):
-    if name == "Legoshi":
+def characterScrypt(array, name, exp="", mainCharacter=""):
+    if name == mainCharacter:
         return array
 
     characterArray[name].change_emotion(exp or "usual")
@@ -40,16 +40,18 @@ def position_characters(characters):
 class GameView(arcade.View):
     def __init__(self):
         super().__init__()
-        self.dialogue_c = 0  # dialogue counter
         self.dialogueContent = readDialogue()
+        
+        self.MCName = "Legoshi"
+        self.chapter_id = self.dialogueContent["_id"]
 
-        self.dialogue_txt = self.dialogueContent["dialogue"]
+        self.dialogue_txt = self.dialogueContent["nodes"][self.dialogueContent["start"]]
         self.backgroundArray = load_background_texture()
         self.bgName = self.dialogueContent["background"]
 
         self.DEFAULTDIALOGUEWIDTH = 130
 
-        self.main_character = characterArray["Legoshi"]
+        self.main_character = characterArray[self.MCName]
         self.main_character.sprite.center_x = (
             settings["window"]["width"] - self.main_character.Width // 2
         )  # position the main character on the right side of the screen
@@ -58,9 +60,9 @@ class GameView(arcade.View):
         )  # position the main character at the bottom of the screen
         self.character_list = arcade.SpriteList()
 
-        self.characters = characterScrypt([], self.dialogue_txt[0]["name"])
+        self.characters = characterScrypt([], self.dialogue_txt["name"])
         self.text_obj = arcade.Text(
-            self.dialogue_txt[0]["message"],
+            self.dialogue_txt["message"],
             100,
             200,
             arcade.color.WHITE,
@@ -98,7 +100,7 @@ class GameView(arcade.View):
         self.character_list.clear()
         self.dialogueBoxList.draw()
 
-        if self.dialogue_txt[self.dialogue_c]["name"] == "Legoshi":
+        if self.dialogue_txt["name"] == self.MCName:
             main_ch = arcade.SpriteList()
             main_ch.append(self.main_character.sprite)
             self.text_obj.width = (
@@ -109,17 +111,18 @@ class GameView(arcade.View):
 
     def on_key_release(self, key, modifiers):
         if key == arcade.key.SPACE:
-            self.dialogue_c += 1
-            msg = self.dialogue_txt[self.dialogue_c]["message"]
+            newDialgue = self.dialogueContent["nodes"][self.dialogue_txt["next"]]
+            self.dialogue_txt = newDialgue
+            msg = self.dialogue_txt["message"]
             self.text_obj.text = msg
 
-            chName = self.dialogue_txt[self.dialogue_c]["name"]
-            exp = self.dialogue_txt[self.dialogue_c]["expression"]
-            if self.dialogue_txt[self.dialogue_c].get("both") or chName == "Legoshi":
+            chName = self.dialogue_txt["name"]
+            exp = self.dialogue_txt["expression"]
+            if self.dialogue_txt.get("both") or chName == self.MCName:
                 # if we get BOTH command then we need to add another character inside
-                self.characters = characterScrypt(self.characters, chName, exp)
+                self.characters = characterScrypt(self.characters, chName, exp, self.MCName)
             else:
-                self.characters = characterScrypt([], chName)
+                self.characters = characterScrypt([], chName, mainCharacter=self.MCName)
 
             position_characters(self.characters)
 

@@ -1,0 +1,28 @@
+{
+  "friendship": {
+    "2120": 1,
+    "2121Legoshi": 0
+  },
+  "save_point": {
+    "chapter_1_street_evening": {
+      "line": "smth",
+      "function": "main",
+      "choice": {
+        "chapter_1_street_evening": {
+          "will you help me?": "Yes!",
+          "May i ask what are you": "A person"
+        }
+      }
+    },
+    "newstoryline": {
+      "line": "smthelse",
+      "function": "main",
+      "choice": {
+        "chapter_1_street_evening": {
+          "will you help me?": "Yes!",
+          "May i ask what are you": "A person"
+        }
+      }
+    }
+  }
+}
