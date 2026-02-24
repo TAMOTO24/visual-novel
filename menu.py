@@ -46,7 +46,7 @@ class MyView(arcade.View):
             text="Exit", width=400, height=50, style=self.btn_style, anchor_x="right"
         )
 
-        exit.center_x = settings["window"]["width"] - self.gap
+        exit.center_x = settings["window"]["width"] - self.gap + 60
         exit.center_y = settings["window"]["height"] - 150
         self.manager.add(exit)
 

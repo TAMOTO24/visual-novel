@@ -115,6 +115,10 @@ class GameView(arcade.View):
             self.dialogue_txt = newDialgue
             msg = self.dialogue_txt["message"]
             self.text_obj.text = msg
+            
+            if self.dialogue_txt.get("background_change"):
+                self.bgName = self.dialogue_txt["background_change"]
+                self.backgroundObj.texture = self.backgroundArray[self.bgName]
 
             chName = self.dialogue_txt["name"]
             exp = self.dialogue_txt["expression"]
@@ -137,15 +141,7 @@ class GameView(arcade.View):
 
 
 def gameCycle(window):
-    # window = arcade.Window(
-    #     settings["window"]["width"], settings["window"]["height"], settings["title"]
-    # )
-    # window.set_update_rate(1 / settings["window"]["fps"])
-
     game = GameView()
     window.show_view(game)
 
     arcade.run()
-
-# if __name__ == "__main__":
-#     main()

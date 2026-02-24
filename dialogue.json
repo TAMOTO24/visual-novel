@@ -19,7 +19,7 @@
       "both": true
     },
     "node_2" : {
-      "background_change": "Street2",
+      "background_change": "Room701",
       "name": "Bill",
       "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
       "expression": "uniform",
@@ -27,11 +27,11 @@
       "both": true
     },
     "node_3": {
-      "background_change": "Street2",
+      "background_change": "Room701Grouph",
       "name": "Bill",
       "message": "Also, I noticed that there are some lines of code that are marked as 'IGNORE'. What does that mean?",
       "expression": "usual",
-      "next": "node_3",
+      "next": "node_4",
       "both": true
     }
   }
