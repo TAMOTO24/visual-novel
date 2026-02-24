@@ -22,7 +22,8 @@ def load_background_texture():
     textures = {
         "Street1": arcade.load_texture("Assets/Other/BackGround/Street1.png"),
         "School": arcade.load_texture("Assets/Other/BackGround/School.png"),
-    }
+        "Room701": arcade.load_texture("Assets/Other/BackGround/Room701Grouph.png"),
+        }
     return textures
 
 def load_dialogue_texture():

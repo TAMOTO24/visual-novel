@@ -41,7 +41,7 @@ class GameView(arcade.View):
     def __init__(self):
         super().__init__()
         self.dialogueContent = readDialogue()
-        
+
         self.MCName = "Legoshi"
         self.chapter_id = self.dialogueContent["_id"]
 
@@ -120,7 +120,9 @@ class GameView(arcade.View):
             exp = self.dialogue_txt["expression"]
             if self.dialogue_txt.get("both") or chName == self.MCName:
                 # if we get BOTH command then we need to add another character inside
-                self.characters = characterScrypt(self.characters, chName, exp, self.MCName)
+                self.characters = characterScrypt(
+                    self.characters, chName, exp, self.MCName
+                )
             else:
                 self.characters = characterScrypt([], chName, mainCharacter=self.MCName)
 
@@ -134,17 +136,16 @@ class GameView(arcade.View):
         self.text_obj.width = settings["window"]["width"] - 130
 
 
-def main():
-    window = arcade.Window(
-        settings["window"]["width"], settings["window"]["height"], settings["title"]
-    )
-    window.set_update_rate(1 / settings["window"]["fps"])
+def gameCycle(window):
+    # window = arcade.Window(
+    #     settings["window"]["width"], settings["window"]["height"], settings["title"]
+    # )
+    # window.set_update_rate(1 / settings["window"]["fps"])
 
     game = GameView()
     window.show_view(game)
 
     arcade.run()
 
-
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
