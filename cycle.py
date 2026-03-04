@@ -3,6 +3,9 @@ import json
 from characters import characterArray
 from setup import settings
 from texture import load_background_texture, load_dialogue_texture
+from overlay import fade
+
+
 
 
 def readDialogue():
@@ -50,6 +53,9 @@ class GameView(arcade.View):
         self.bgName = self.dialogueContent["background"]
 
         self.DEFAULTDIALOGUEWIDTH = 130
+        fade.start(
+            lambda: None, alpha=255, reverse=True
+        )  # Initialize fade with alpha 0 and no callback
 
         self.main_character = characterArray[self.MCName]
         self.main_character.sprite.center_x = (
@@ -109,13 +115,16 @@ class GameView(arcade.View):
             main_ch.draw()
         self.text_obj.draw()
 
+        if fade.active:
+            fade.draw(self.window)
+
     def on_key_release(self, key, modifiers):
         if key == arcade.key.SPACE:
             newDialgue = self.dialogueContent["nodes"][self.dialogue_txt["next"]]
             self.dialogue_txt = newDialgue
             msg = self.dialogue_txt["message"]
             self.text_obj.text = msg
-            
+
             if self.dialogue_txt.get("background_change"):
                 self.bgName = self.dialogue_txt["background_change"]
                 self.backgroundObj.texture = self.backgroundArray[self.bgName]
@@ -138,10 +147,14 @@ class GameView(arcade.View):
             if not ch.sprite in self.character_list:
                 self.character_list.append(ch.sprite)
         self.text_obj.width = settings["window"]["width"] - 130
+        
+        if fade.active:
+            fade.update(delta_time)
 
 
-def gameCycle(window):
+def gameCycle():
     game = GameView()
+    window = arcade.get_window()
     window.show_view(game)
 
     arcade.run()

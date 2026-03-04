@@ -3,6 +3,7 @@ from arcade.gui import UIManager, UIFlatButton
 from setup import settings
 from texture import load_background_texture
 from cycle import gameCycle
+from overlay import fade
 
 
 class MyView(arcade.View):
@@ -15,6 +16,7 @@ class MyView(arcade.View):
         self.btn_style = settings["style"]["btn"]
         self.manager = UIManager()
         self.gap = 200
+        self.loading = False
 
         self.backgroundObj = arcade.Sprite()
         self.backgroundObj.texture = self.backgroundArray[self.bgName]
@@ -24,6 +26,13 @@ class MyView(arcade.View):
         self.backgroundObj.width = settings["window"]["width"] - 150
         self.backgroundSpriteList = arcade.SpriteList()
         self.backgroundSpriteList.append(self.backgroundObj)
+
+    def loadingComplete(self):
+        def switch_view(delta_time):
+            self.loading = False
+            self.window.show_view(gameCycle())
+
+        arcade.schedule_once(switch_view, 0)
 
     def on_show_view(self):
         self.manager.enable()
@@ -52,16 +61,29 @@ class MyView(arcade.View):
 
         @startBtn.event("on_click")
         def on_click(event):
-            gameCycle(self.window)
+            if self.loading:
+                return
+
+            self.loading = True
+
+            fade.start(callback=self.loadingComplete, alpha=0, reverse=False)
 
         @exit.event("on_click")
         def on_exit(event):
+            if self.loading:
+                return
             arcade.close_window()
 
     def on_draw(self):
         self.clear()
         self.backgroundSpriteList.draw()
         self.manager.draw()
+        if self.loading:
+            fade.draw(self.window)
+
+    def on_update(self, delta_time):
+        if self.loading:
+            fade.update(delta_time)
 
 
 window = arcade.Window(
